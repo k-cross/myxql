@@ -481,6 +481,9 @@ defmodule MyXQL.Protocol.Values do
        when n < 251,
        do: decode_binary_row(r, null_bitmap >>> 1, t, [v | acc])
 
+  defp decode_string_lenenc(<<0xFA, n::uint1, v::string(n), r::bits>>, null_bitmap, t, acc),
+    do: decode_binary_row(r, null_bitmap >>> 1, t, [v | acc])
+
   defp decode_string_lenenc(<<0xFC, n::uint2, v::string(n), r::bits>>, null_bitmap, t, acc),
     do: decode_binary_row(r, null_bitmap >>> 1, t, [v | acc])
 
